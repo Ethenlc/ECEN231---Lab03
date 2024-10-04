@@ -47,32 +47,56 @@ public:
 
    // Position :    The Position class can work with other positions,
    //               Allowing for comparisions, copying, etc.
-   Position(const Position & rhs) {              }
+   Position(const Position& rhs)  { this->colRow = rhs.colRow; }
    Position() : colRow(0x99)      {              }
-   bool isInvalid() const         { return true; }
-   bool isValid()   const         { return true; }
-   void setValid()                {              }
-   void setInvalid()              {              }
-   bool operator <  (const Position & rhs) const { return true; }
-   bool operator == (const Position & rhs) const { return true; }
-   bool operator != (const Position & rhs) const { return true; }
-   const Position & operator =  (const Position & rhs) { return *this; }
+
+   // Constructor using the row / column
+   // Set colRow using the bit-shift and mask technique
+   Position(int c, int r) : colRow(0x99) { colRow = (uint8_t)((c << 4) | (r & 0x0F)); }
+
+   // Constructor using location (0-63)
+   // Converts location to row / column
+   Position(int location) { setLocation(location); }
+
+   bool isInvalid() const         { return (colRow & 0x88) != 0; } // If top bit is set, it's invalid
+   bool isValid()   const         { return (colRow & 0x88) == 0; } // Both top bits must be 0 for valid
+   void setValid()                { colRow &= ~0x88; } // Clear the top bits to make valid
+   void setInvalid()              { colRow = 0xFF; } // Set to 0xFF to make invalid
+
+   // Comparison operators
+   bool operator <  (const Position & rhs) const { return colRow < rhs.colRow; }
+   bool operator == (const Position& rhs) const { return colRow == rhs.colRow; }
+   bool operator != (const Position & rhs) const { return !(*this == rhs); }
+   const Position& operator =  (const Position& rhs) { this->colRow = rhs.colRow; return *this; }
    
    // Location : The Position class can work with locations, which
    //            are 0...63 where we start in row 0, then row 1, etc.
-   Position(int location) : colRow(0x99) { }
-   int getLocation() const               { return 9; }
-   void setLocation(int location)        {           }
+   int getLocation() const               { 
+       if (isInvalid())
+           return -1;
+       int row = getRow();
+       int col = getCol();
+       return row + (col * 8); } // Convert the row and column to a single location (0-63)
+   void setLocation(int location)        { // Convert location (0-63) to row and column
+       int col = location % 8;
+       int row = location / 8;
+       colRow = (uint8_t)((col << 4) | (row & 0x0F));
+   }
 
    
    // Row/Col : The position class can work with row/column,
    //           which are 0..7 and 0...7
-   Position(int c, int r) : colRow(0x99)  {           }
-   virtual int getCol() const                     { return 9; }
-   virtual int getRow() const                     { return 9; }
-   void setRow(int r)                     {           }
-   void setCol(int c)                     {           }
-   void set(int c, int r)                 {           }
+   virtual int getCol() const             { 
+       if (isInvalid())
+           return -1;
+       return (colRow & 0xF0) >> 4; } // Extract upper nibble (column) and shift right
+   virtual int getRow() const             { 
+       if (isInvalid())
+           return -1;
+       return (colRow & 0x0F); } // Extract the lower nibble (row)
+   void setRow(int r)                     { colRow = (uint8_t)((colRow & 0xF0) | (r & 0x0F)); } // Clear the row bits and set the new row
+   void setCol(int c)                     { colRow = (uint8_t)((colRow & 0x0F) | (c << 4)); } // Clear the column bits and set the new column
+   void set(int c, int r)                 { colRow = (uint8_t)((c << 4) | (r & 0x0F)); } // Set both row and column
 
    // Text:    The Position class can work with textual coordinates,
    //          such as "d4"
@@ -103,7 +127,7 @@ public:
    Position operator + (const Delta & rhs) const { return *this; }
 
 private:
-   void set(uint8_t colRowNew) { }
+    void set(uint8_t colRowNew) { colRow = colRowNew; }
    
    uint8_t colRow;
    static double squareWidth;

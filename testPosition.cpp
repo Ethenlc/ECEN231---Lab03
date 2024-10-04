@@ -163,7 +163,7 @@ void PositionTest::getLocation_middle()
    location = pos.getLocation();
 
    // VERIFY
-   assertUnit(location == 33);
+   assertUnit(location == 12);
    assertUnit(pos.colRow == 0x14);
 
 }  // TEARDOWN

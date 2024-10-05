@@ -13,6 +13,7 @@
 #include "piece.h"
 #include "board.h"
 #include <cassert>
+#include <iostream>
 
 
  /***********************************************

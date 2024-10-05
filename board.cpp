@@ -19,7 +19,7 @@ Space space;
 
 /***********************************************
 * BOARD : GET
-*         Get a piece from a given position.
+* Get a piece from a given position.
 ***********************************************/
 const Piece& Board::operator [] (const Position& pos) const
 {
@@ -27,7 +27,9 @@ const Piece& Board::operator [] (const Position& pos) const
 }
 Piece& Board::operator [] (const Position& pos)
 {
-   return space;
+	int row = pos.getRow(); // Get the row from the Position
+	int col = pos.getCol(); // Get the column from the Position
+	return *board[col][row]; // Return a reference to this position
 }
 
 

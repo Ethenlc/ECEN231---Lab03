@@ -40,15 +40,21 @@ class Board
    friend TestBoard;
 
 public:
+   // Constructor
+    Board() : numMoves(0) {
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                board[i][j] = nullptr;
+    }
 
    // getters
-   virtual int  getCurrentMove() const { return -99;      }
-   virtual bool whiteTurn()      const { return false;  }
+    virtual int  getCurrentMove() const { return numMoves; }
+   virtual bool whiteTurn()      const { return (numMoves % 2 == 0);  }
    virtual void display(const Position& posHover, const Position& posSelect) const {}
    virtual const Piece& operator [] (const Position& pos) const;
 
    // setters
-   virtual void move(const Move & move) { }
+   virtual void move(const Move& move) { numMoves++; }
    virtual Piece& operator [] (const Position& pos);
 
 protected:

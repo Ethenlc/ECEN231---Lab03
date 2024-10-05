@@ -10,6 +10,7 @@
 #pragma once
 
 #include "unitTest.h"
+#include <iostream>
 
 class Board;
 

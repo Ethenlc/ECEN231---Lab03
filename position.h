@@ -86,11 +86,11 @@ public:
    
    // Row/Col : The position class can work with row/column,
    //           which are 0..7 and 0...7
-   virtual int getCol() const             { 
+   virtual int getCol() const { 
        if (isInvalid())
            return -1;
        return (colRow & 0xF0) >> 4; } // Extract upper nibble (column) and shift right
-   virtual int getRow() const             { 
+   virtual int getRow() const { 
        if (isInvalid())
            return -1;
        return (colRow & 0x0F); } // Extract the lower nibble (row)
@@ -149,10 +149,31 @@ public:
    //           offsets from a given location. This helps pieces move
    //           on the chess board.
    Position(const Position & rhs, const Delta & delta) : colRow(-1) {  }
-   void adjustRow(int dRow)   { }
-   void adjustCol(int dCol)   { }
-   const Position & operator += (const Delta & rhs) { return *this; }
-   Position operator + (const Delta & rhs) const { return *this; }
+   void adjustRow(int dRow)   { 
+       int newRow = getRow() + dRow;
+       if (newRow >= 0 && newRow <= 7) // Check the new row is valid
+           setRow(newRow);
+       else
+           setInvalid();
+   }
+   void adjustCol(int dCol)   { 
+       int newCol = getCol() + dCol;
+       if (newCol >= 0 && newCol <= 7) // Check the new column is valid
+           setCol(newCol);
+       else
+           setInvalid();
+   }
+   const Position & operator += (const Delta & rhs) { 
+       adjustRow(rhs.dRow);
+       adjustCol(rhs.dCol);
+       return *this;
+   }
+   Position operator + (const Delta & rhs) const { 
+       Position result = *this;
+       result.adjustRow(rhs.dRow);
+       result.adjustCol(rhs.dCol);
+       return result;
+   }
 
 private:
     void set(uint8_t colRowNew) { colRow = colRowNew; }

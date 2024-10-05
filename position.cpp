@@ -2,7 +2,7 @@
  * Source File:
  *    POSITION
  * Author:
- *    <your name here>
+ *    Ethen Campbell & Joseph Gyman
  * Summary:
  *    The position of a piece, the cursor, or a possible move on a chess board
  ************************************************************************/

@@ -2,7 +2,7 @@
  * Source File:
  *    TEST BOARD
  * Author:
- *    <your name here>
+ *    Ethen Campbell & Joseph Gyman
  * Summary:
  *    The unit tests for board
  ************************************************************************/

@@ -2,7 +2,7 @@
  * Source File:
  *    MOVE
  * Author:
- *    <your name here>
+ *    Ethen Campbell & Joseph Gyman
  * Summary:
  *    Everything we need to know about a single chess move
  ************************************************************************/

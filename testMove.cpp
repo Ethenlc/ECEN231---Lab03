@@ -2,7 +2,7 @@
  * Header File:
  *    TEST MOVE 
  * Author:
- *    <your name here>
+ *    Ethen Campbell & Joseph Gyman
  * Summary:
  *    test the Move class
  ************************************************************************/

@@ -32,10 +32,60 @@ public:
    // constructor
    Move();
 
+   // Equality operator
+   bool operator==(const Move& rhs) const
+   {
+	   return (this->source == rhs.source &&
+		   this->dest == rhs.dest &&
+		   this->promote == rhs.promote &&
+		   this->capture == rhs.capture &&
+		   this->moveType == rhs.moveType &&
+		   this->isWhite == rhs.isWhite);
+   }
+
+   // Less than operator for comparison
+   bool operator<(const Move& rhs) const
+   {
+	   if (this->source != rhs.source)
+		   return this->source < rhs.source;
+	   if (this->dest != rhs.dest)
+		   return this->dest < rhs.dest;
+	   // Optionally include other fields like promote, capture, etc.
+	   return false; // If all are equal, return false
+   }
 
 private:
-   char letterFromPieceType(PieceType pt)     const { return 'z';   }
-   PieceType pieceTypeFromLetter(char letter) const { return SPACE; }
+   // Convert PieceType to char
+   char letterFromPieceType(PieceType pt)     const 
+   { 
+	   switch (pt)
+	   {
+	   case PAWN:   return 'p';
+	   case BISHOP: return 'b';
+	   case KNIGHT: return 'n';
+	   case ROOK:   return 'r';
+	   case QUEEN:  return 'q';
+	   case KING:   return 'k';
+	   case SPACE:  return ' '; // Empty space or no piece
+	   default:		return '?'; // Error case
+		}
+   }
+
+   // Convert char to PieceType
+   PieceType pieceTypeFromLetter(char letter) const 
+   {
+	   switch (letter)
+	   {
+	   case 'p': return PAWN;
+	   case 'b': return BISHOP;
+	   case 'n': return KNIGHT;
+	   case 'r': return ROOK;
+	   case 'q': return QUEEN;
+	   case 'k': return KING;
+	   case ' ': return SPACE; // Empty space
+	   default:  return SPACE; // Default to SPACE for unrecognized input
+	   }
+   }
 
 
 

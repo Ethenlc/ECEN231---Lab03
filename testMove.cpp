@@ -20,7 +20,9 @@
   **************************************/
 void TestMove::constructor_default() 
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+   Move move;
+   assertUnit(move.source.isInvalid());
+   assertUnit(move.dest.isInvalid());
 }
 
  /*************************************
@@ -226,7 +228,8 @@ void TestMove::getText_castleQueen()
   **************************************/
 void TestMove::letterFromPieceType_space()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(SPACE) == ' ');
 }
 
  /*************************************
@@ -236,7 +239,8 @@ void TestMove::letterFromPieceType_space()
   **************************************/
 void TestMove::letterFromPieceType_pawn()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+   Move move;
+   assertUnit(move.letterFromPieceType(PAWN) == 'p');
 }
 
  /*************************************
@@ -246,7 +250,8 @@ void TestMove::letterFromPieceType_pawn()
   **************************************/
 void TestMove::letterFromPieceType_bishop()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(BISHOP) == 'b');
 }
 
  /*************************************
@@ -256,7 +261,8 @@ void TestMove::letterFromPieceType_bishop()
   **************************************/
 void TestMove::letterFromPieceType_knight()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(KNIGHT) == 'n');
 }
 
  /*************************************
@@ -266,7 +272,8 @@ void TestMove::letterFromPieceType_knight()
   **************************************/
 void TestMove::letterFromPieceType_rook()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(ROOK) == 'r');
 }
 
  /*************************************
@@ -276,7 +283,8 @@ void TestMove::letterFromPieceType_rook()
   **************************************/
 void TestMove::letterFromPieceType_queen()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(QUEEN) == 'q');
 }
 
  /*************************************
@@ -286,7 +294,8 @@ void TestMove::letterFromPieceType_queen()
   **************************************/
 void TestMove::letterFromPieceType_king()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.letterFromPieceType(KING) == 'k');
 }
 
  /*************************************
@@ -296,7 +305,8 @@ void TestMove::letterFromPieceType_king()
   **************************************/
 void TestMove::pieceTypeFromLetter_pawn()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('p') == PAWN);
 }
 
  /*************************************
@@ -306,7 +316,8 @@ void TestMove::pieceTypeFromLetter_pawn()
   **************************************/
 void TestMove::pieceTypeFromLetter_bishop()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('b') == BISHOP);
 }
 
  /*************************************
@@ -316,7 +327,8 @@ void TestMove::pieceTypeFromLetter_bishop()
   **************************************/
 void TestMove::pieceTypeFromLetter_knight()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('n') == KNIGHT);
 }
 
  /*************************************
@@ -326,7 +338,8 @@ void TestMove::pieceTypeFromLetter_knight()
   **************************************/
 void TestMove::pieceTypeFromLetter_rook()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('r') == ROOK);
 }
 
  /*************************************
@@ -336,7 +349,8 @@ void TestMove::pieceTypeFromLetter_rook()
   **************************************/
 void TestMove::pieceTypeFromLetter_queen()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('q') == QUEEN);
 }
 
  /*************************************
@@ -346,7 +360,8 @@ void TestMove::pieceTypeFromLetter_queen()
   **************************************/
 void TestMove::pieceTypeFromLetter_king() 
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move;
+	assertUnit(move.pieceTypeFromLetter('k') == KING);
 }
 
 
@@ -357,7 +372,15 @@ void TestMove::pieceTypeFromLetter_king()
   **************************************/
 void TestMove::equal_not()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	bool response;
+	Move move1, move2;
+	move1.source = Position("b2");
+	move1.dest = Position("b4");
+	move2.source = Position("b2");
+	move2.dest = Position("b5");
+
+	response = (move1 == move2);
+	assertUnit(response == false);
 }
 
  /*************************************
@@ -367,7 +390,12 @@ void TestMove::equal_not()
   **************************************/
 void TestMove::equal_equals()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move1, move2;
+	move1.source = Position("b2");
+	move1.dest = Position("b4");
+	move2.source = Position("b2");
+	move2.dest = Position("b4");
+	assertUnit(move1 == move2);
 }
 
  /*************************************
@@ -377,7 +405,12 @@ void TestMove::equal_equals()
   **************************************/
 void TestMove::lessthan_lessthan()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move1, move2;
+	move1.source = Position("b2");
+	move1.dest = Position("b2");
+	move2.source = Position("b2");
+	move2.dest = Position("b4");
+	assertUnit(move1 < move2);
 }
 
  /*************************************
@@ -387,7 +420,15 @@ void TestMove::lessthan_lessthan()
   **************************************/
 void TestMove::lessthan_equals()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	bool response;
+	Move move1, move2;
+	move1.source = Position("b2");
+	move1.dest = Position("b4");
+	move2.source = Position("b2");
+	move2.dest = Position("b4");
+
+	response = (move1 < move2);
+	assertUnit(response == false);
 }
 
  /*************************************
@@ -397,5 +438,10 @@ void TestMove::lessthan_equals()
   **************************************/
 void TestMove::lessthan_greaterthan()
 {
-   assertUnit(NOT_YET_IMPLEMENTED);
+	Move move1, move2;
+	move1.source = Position("b2");
+	move1.dest = Position("b4");
+	move2.source = Position("b2");
+	move2.dest = Position("b2");
+	assertUnit(!(move1 < move2));
 }

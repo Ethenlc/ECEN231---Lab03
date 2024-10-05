@@ -20,6 +20,12 @@ using namespace std;
  ***************************************************/
 Move::Move()
 {
+	source.setInvalid();
+	dest.setInvalid();
+	promote = SPACE;		// Default piece type is SPACE
+	capture = SPACE;		// Default capture is no capture (SPACE)
+	moveType = MOVE;		// Default move type
+	isWhite = true;			// Default isWhite to true
 }
 
 

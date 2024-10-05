@@ -101,10 +101,38 @@ public:
    // Text:    The Position class can work with textual coordinates,
    //          such as "d4"
    
-   Position(const char * s) : colRow(0x99) {   }
-   const Position & operator =  (const char     * rhs) { return *this; }
-   const Position & operator =  (const string   & rhs) { return *this; }
+   Position(const char* s) { *this = s; } // Position using Text ("xx")
 
+   // Convert Text to Position ("xx" -> Row/Column)
+   const Position& operator=(const char* rhs)
+   {
+       if (rhs && strlen(rhs) == 2)
+       {
+           char col = rhs[0];
+           char row = rhs[1];
+
+           // Convert 'a'-'h' to 0-7 (columns) and '1'-'8' to 0-7 (rows)
+           int colValue = col - 'a';
+           int rowValue = row - '1';
+
+           // Only assign if column and row are valid
+           if (colValue >= 0 && colValue <= 7 && rowValue >= 0 && rowValue <= 7)
+               colRow = (colValue << 4) | (rowValue & 0x0F);
+           else
+               colRow = 0xFF; // Invalid value
+       }
+       else
+       {
+           colRow = 0xFF; // Invalid value
+       }
+
+       return *this;
+   }
+
+   const Position& operator=(const string& rhs)
+   {
+       return *this = rhs.c_str();
+   }
    
    // Pixels:    The Position class can work with screen coordinates,
    //            a.k.a. Pixels, these are X and Y coordinates. Note that
